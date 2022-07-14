@@ -9,11 +9,31 @@ npm i @biothings-explorer/node-expansion
 ```
 
 ## Usage
-    
+
+- by default, the module will expand terms to all children
+
 ```js
 const { getChildren } = require('@biothings-explorer/node-expansion');
 
-console.log(getChildren(['GO:0022010', 'DOID:0060524', 'DOID:4']));
+console.log(getChildren(['GO:0022010', 'DOID:0060524']));
+
+// {
+//   'DOID:0060524': [
+//     'DOID:0040001',
+//     'DOID:0060526',
+//     'DOID:0060525',
+//     'DOID:0060527',
+//     'DOID:0060528',
+//     'DOID:0060529'
+//   ]
+// }
+```
+
+ - use `recursive=false` to get direct children only
+```js
+const { getChildren } = require('@biothings-explorer/node-expansion');
+
+console.log(getChildren(['GO:0022010', 'DOID:0060524', 'DOID:4'], recursive=false));
 
 // {
 //   'DOID:0060524': [ 'DOID:0040001', 'DOID:0060526' ],

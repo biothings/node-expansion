@@ -19,7 +19,26 @@ const loadData = () => {
 }
 
 //get all children of a list of curies
-exports.getChildren = (curies) => {
+exports.getChildren = (curies, recursive = true) => {
   loadData();
-  return _.pick(data, curies);
+  if (recursive) {
+    //recursively get all children
+    const children = _.pick(data, curies);
+    const getChildrenRecur = (curies, prop) => {
+      for (let curie of curies) {
+        if (data[curie]) {
+          children[prop].push(...data[curie]);
+          getChildrenRecur(data[curie], prop);
+        }
+      }
+    }
+    //get children recursively for each key value of children
+    for (const prop in children) {
+      getChildrenRecur(children[prop], prop);
+    }
+    return children;
+  } else
+  {
+    return _.pick(data, curies);
+  }
 }
