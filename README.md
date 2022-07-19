@@ -13,9 +13,9 @@ npm i @biothings-explorer/node-expansion
 - by default, the module will expand terms to all children
 
 ```js
-const { getChildren } = require('@biothings-explorer/node-expansion');
+const { getDescendants } = require('@biothings-explorer/node-expansion');
 
-console.log(getChildren(['GO:0022010', 'DOID:0060524']));
+console.log(getDescendants(['GO:0022010', 'DOID:0060524']));
 
 // {
 //   'DOID:0060524': [
@@ -31,9 +31,9 @@ console.log(getChildren(['GO:0022010', 'DOID:0060524']));
 
  - use `recursive=false` to get direct children only
 ```js
-const { getChildren } = require('@biothings-explorer/node-expansion');
+const { getDescendants } = require('@biothings-explorer/node-expansion');
 
-console.log(getChildren(['GO:0022010', 'DOID:0060524', 'DOID:4'], recursive=false));
+console.log(getDescendants(['GO:0022010', 'DOID:0060524', 'DOID:4'], recursive=false));
 
 // {
 //   'DOID:0060524': [ 'DOID:0040001', 'DOID:0060526' ],
@@ -55,3 +55,4 @@ console.log(getChildren(['GO:0022010', 'DOID:0060524', 'DOID:4'], recursive=fals
 ```
 node download.js
 ```
+ - downloads, converts, and parses all the owl files listed in the config file
