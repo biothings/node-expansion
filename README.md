@@ -10,7 +10,7 @@ npm i @biothings-explorer/node-expansion
 
 ## Usage
 
-- by default, the module will expand terms to all children
+- by default, the module will expand terms to all descendants
 
 ```js
 const { getDescendants } = require('@biothings-explorer/node-expansion');
@@ -50,6 +50,12 @@ console.log(getDescendants(['GO:0022010', 'DOID:0060524', 'DOID:4'], recursive=f
 // }
 ```
 
+### Currently included ontologies
+- GO
+- DOID
+- HP
+- MONDO
+- CHEBI
 
 ### Update Data Files
 ```
