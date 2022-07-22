@@ -7,14 +7,14 @@ let loaded = false;
 //load data from json files based on ontologies
 const loadData = () => {
   if (loaded) return;
-  const start = performance.now();
+  // const start = performance.now();
   for (let ontology in ONTOLOGIES) {
     const filename = `../data/${ontology}-parsed.json`;
     const ontologyData = require(filename);
     data = {...data, ...ontologyData};
   }
-  const end = performance.now();
-  console.log(`loadData took ${end - start} milliseconds.`);
+  // const end = performance.now();
+  // console.log(`loadData took ${end - start} milliseconds.`);
   loaded = true;
 }
 
@@ -35,6 +35,7 @@ exports.getDescendants = (curies, recursive = true) => {
     //get children recursively for each key value of children
     for (const prop in children) {
       getDescendantsRecur(children[prop], prop);
+      children[prop] = _.uniq(children[prop]);
     }
     return children;
   } else

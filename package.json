@@ -1,6 +1,6 @@
 {
   "name": "@biothings-explorer/node-expansion",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Module for expanding terms to children.",
   "main": "src/index.js",
   "scripts": {
