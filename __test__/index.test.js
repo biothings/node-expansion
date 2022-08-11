@@ -45,6 +45,15 @@ test('mondo', () => {
   expect(descendants['MONDO:0001517']).toContain('MONDO:0024275');
 });
 
+//UMLS:C0680344 -> UMLS:C0003114 -> UMLS:C0680369
+//sociocultural values, norms, and social control -> anomie -> anomie(normless)
+test('umls', () => {
+  let curies = ['UMLS:C0680344'];
+  let descendants = getDescendants(curies);
+  expect(descendants['UMLS:C0680344']).toContain('UMLS:C0003114');
+  expect(descendants['UMLS:C0680344']).toContain('UMLS:C0680369');
+});
+
 test('multiple', () => {
   let curies = ['HP:0003812', 'MONDO:0001517'];
   let descendants = getDescendants(curies);
