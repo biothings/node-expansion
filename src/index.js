@@ -24,9 +24,11 @@ exports.getDescendants = (curies, recursive = true) => {
   if (recursive) {
     //recursively get all children
     const children = _.pick(data, curies);
+    let visited = []; // keep track of visited nodes to prevent infinite recursion
     const getDescendantsRecur = (curies, prop) => {
       for (let curie of curies) {
-        if (data[curie]) {
+        if (data[curie] && !visited.includes(curie)) {
+          visited.push(curie);
           children[prop].push(...data[curie]);
           getDescendantsRecur(data[curie], prop);
         }
