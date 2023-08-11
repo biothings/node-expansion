@@ -4,6 +4,8 @@ const _ = require('lodash');
 let data = {};
 let loaded = false;
 
+const ENTITY_CAP = 100;
+
 //load data from json files based on ontologies
 const loadData = () => {
   if (loaded) return;
@@ -22,22 +24,23 @@ const loadData = () => {
 exports.getDescendants = (curies, recursive = true) => {
   loadData();
   if (recursive) {
-    //recursively get all children
-    const children = _.pick(data, curies);
-    let visited = []; // keep track of visited nodes to prevent infinite recursion
-    const getDescendantsRecur = (curies, prop) => {
-      for (let curie of curies) {
-        if (data[curie] && !visited.includes(curie)) {
-          visited.push(curie);
-          children[prop].push(...data[curie]);
-          getDescendantsRecur(data[curie], prop);
+    //run level order traversal to get closest descendants
+    const children = {};
+
+    for (let curie of curies) {
+      children[curie] = [];
+      level = [curie];
+      while (level.length > 0 && children[curie].length < ENTITY_CAP) {
+        next_level = [];
+        for (let c of level) {
+          if (data[c]) {
+            children[curie].push(...data[c]);
+            next_level.push(...data[c]);
+          }
         }
+        level = next_level;
       }
-    }
-    //get children recursively for each key value of children
-    for (const prop in children) {
-      getDescendantsRecur(children[prop], prop);
-      children[prop] = _.uniq(children[prop]);
+      children[curie] = _.uniq(children[curie]).slice(0, ENTITY_CAP);
     }
     return children;
   } else
