@@ -66,5 +66,10 @@ test('multiple', () => {
 test('no descendants', () => {
   let curies = ['DOID:0060527'];
   let descendants = getDescendants(curies);
-  expect(descendants).not.toHaveProperty('DOID:0060527');
+  expect(descendants['DOID:0060527'].length).toBe(0);
+});
+
+test('recursive', () => {
+  let curies = ['UMLS:C0012634'];
+  let descendants = getDescendants(curies);
 });
