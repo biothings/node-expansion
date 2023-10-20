@@ -8,6 +8,7 @@
     "prepare": "pnpm run build",
     "clean": "rimraf ./built './**/tsconfig.tsbuildinfo'",
     "test": "jest",
+    "test-cov": "jest --coverage",
     "format": "prettier --check 'src/**/*.js'",
     "format:fix": "prettier --write 'src/**/*.js'",
     "lint": "eslint . --ext .js",
