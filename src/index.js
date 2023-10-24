@@ -1,5 +1,5 @@
-const { ONTOLOGIES } = require('./config');
-const _ = require('lodash');
+const { ONTOLOGIES } = require("./config");
+const _ = require("lodash");
 
 let data = {};
 let loaded = false;
@@ -13,12 +13,12 @@ const loadData = () => {
   for (let ontology in ONTOLOGIES) {
     const filename = `../data/${ontology}-parsed.json`;
     const ontologyData = require(filename);
-    data = {...data, ...ontologyData};
+    data = { ...data, ...ontologyData };
   }
   // const end = performance.now();
   // console.log(`loadData took ${end - start} milliseconds.`);
   loaded = true;
-}
+};
 
 //get all children of a list of curies
 exports.getDescendants = (curies, recursive = true) => {
@@ -43,8 +43,7 @@ exports.getDescendants = (curies, recursive = true) => {
       children[curie] = _.uniq(children[curie]).slice(0, ENTITY_CAP);
     }
     return children;
-  } else
-  {
+  } else {
     return _.pick(data, curies);
   }
-}
+};

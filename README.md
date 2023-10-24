@@ -5,7 +5,7 @@ Module for expanding terms to children.
 ## Install
 
 ```
-npm i @biothings-explorer/node-expansion
+pnpm i @biothings-explorer/node-expansion
 ```
 
 ## Usage
