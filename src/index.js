@@ -40,10 +40,16 @@ exports.getDescendants = (curies, recursive = true) => {
         }
         level = next_level;
       }
-      children[curie] = _.uniq(children[curie]).slice(0, ENTITY_CAP);
+      children[curie] = _.uniq(children[curie])
+        .filter(child => child !== curie)
+        .slice(0, ENTITY_CAP);
     }
     return children;
   } else {
-    return _.pick(data, curies);
+    return Object.fromEntries(
+      Object.entries(_.pick(data, curies)).map(([curie, descendants]) => {
+        return [curie, descendants.filter(descendant => descendant !== curie)];
+      }),
+    );
   }
 };
