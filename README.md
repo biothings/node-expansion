@@ -8,6 +8,9 @@ Module for expanding terms to children.
 pnpm i @biothings-explorer/node-expansion
 ```
 
+### Dependencies
+1. Java 11+ (to run `robot.jar`)
+
 ## Usage
 
 - by default, the module will expand terms to all descendants

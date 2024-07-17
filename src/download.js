@@ -20,6 +20,7 @@ for (let ontology of Object.values(ONTOLOGIES)) {
     console.log(`Done downloading ${url} with code ${code}`);
 
     // use robot to convert owl to json
+    // http://robot.obolibrary.org/
     child_process.execSync(
       `../robot convert -i ../data/${ontology.name}.owl --format json -o ../data/${ontology.name}.json`,
     );
