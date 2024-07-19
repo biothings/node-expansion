@@ -8,6 +8,10 @@ Module for expanding terms to children.
 pnpm i @biothings-explorer/node-expansion
 ```
 
+### Dependencies
+1. Java 11+ (to run `robot.jar`)
+2. Download the script and JAR from [ROBOT](http://robot.obolibrary.org/). The script for Mac & Linux is already downloaded.
+
 ## Usage
 
 - by default, the module will expand terms to all descendants
@@ -62,3 +66,6 @@ console.log(getDescendants(['GO:0022010', 'DOID:0060524', 'DOID:4'], recursive=f
 node download.js
 ```
  - downloads, converts, and parses all the owl files listed in the config file
+
+## References
+R.C. Jackson, J.P. Balhoff, E. Douglass, N.L. Harris, C.J. Mungall, and J.A. Overton. ROBOT: A tool for automating ontology workflows. BMC Bioinformatics, vol. 20, July 2019.

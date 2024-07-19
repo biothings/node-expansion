@@ -27,13 +27,12 @@ test('go', () => {
   expect(descendants['GO:0032553']).toContain('GO:0032559');
 });
 
-//HP:0003812 -> HP:0003829 -> HP:0003831
-//Phenotypic variability -> Incomplete penetrance -> Age-dependent penetrance
+//HP:0003812 -> HP:0003828
+//Phenotypic variability -> Variable expressivity
 test('hp', () => {
   let curies = ['HP:0003812'];
   let descendants = getDescendants(curies);
-  expect(descendants['HP:0003812']).toContain('HP:0003829');
-  expect(descendants['HP:0003812']).toContain('HP:0003831');
+  expect(descendants['HP:0003812']).toContain('HP:0003828');
 });
 
 //MONDO:0001517 -> MONDO:0001955 -> MONDO:0024275
@@ -57,8 +56,7 @@ test('umls', () => {
 test('multiple', () => {
   let curies = ['HP:0003812', 'MONDO:0001517'];
   let descendants = getDescendants(curies);
-  expect(descendants['HP:0003812']).toContain('HP:0003829');
-  expect(descendants['HP:0003812']).toContain('HP:0003831');
+  expect(descendants['HP:0003812']).toContain('HP:0003828');
   expect(descendants['MONDO:0001517']).toContain('MONDO:0001955');
   expect(descendants['MONDO:0001517']).toContain('MONDO:0024275');
 });
