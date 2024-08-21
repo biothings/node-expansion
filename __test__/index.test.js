@@ -5,8 +5,8 @@ const { getDescendants } = require('../src/index');
 test('chebi', () => {
   let curies = ['CHEBI:26218'];
   let descendants = getDescendants(curies);
-  expect(descendants['CHEBI:26218']).toContain('CHEBI:50394');
-  expect(descendants['CHEBI:26218']).toContain('CHEBI:51700');
+  expect(descendants['CHEBI:26218']).toHaveProperty('CHEBI:50394');
+  expect(descendants['CHEBI:26218']).toHaveProperty('CHEBI:51700');
 });
 
 //DOID:0060524 -> DOID:0040001 -> DOID:0060527
@@ -14,8 +14,8 @@ test('chebi', () => {
 test('doid', () => {
   let curies = ['DOID:0060524'];
   let descendants = getDescendants(curies);
-  expect(descendants['DOID:0060524']).toContain('DOID:0040001');
-  expect(descendants['DOID:0060524']).toContain('DOID:0060527');
+  expect(descendants['DOID:0060524']).toHaveProperty('DOID:0040001');
+  expect(descendants['DOID:0060524']).toHaveProperty('DOID:0060527');
 });
 
 //GO:0032553 -> GO:0032555 -> GO:0032559 
@@ -23,8 +23,8 @@ test('doid', () => {
 test('go', () => {
   let curies = ['GO:0032553'];
   let descendants = getDescendants(curies);
-  expect(descendants['GO:0032553']).toContain('GO:0032555');
-  expect(descendants['GO:0032553']).toContain('GO:0032559');
+  expect(descendants['GO:0032553']).toHaveProperty('GO:0032555');
+  expect(descendants['GO:0032553']).toHaveProperty('GO:0032559');
 });
 
 //HP:0003812 -> HP:0003828
@@ -32,7 +32,7 @@ test('go', () => {
 test('hp', () => {
   let curies = ['HP:0003812'];
   let descendants = getDescendants(curies);
-  expect(descendants['HP:0003812']).toContain('HP:0003828');
+  expect(descendants['HP:0003812']).toHaveProperty('HP:0003828');
 });
 
 //MONDO:0001517 -> MONDO:0001955 -> MONDO:0024275
@@ -40,8 +40,8 @@ test('hp', () => {
 test('mondo', () => {
   let curies = ['MONDO:0001517'];
   let descendants = getDescendants(curies);
-  expect(descendants['MONDO:0001517']).toContain('MONDO:0001955');
-  expect(descendants['MONDO:0001517']).toContain('MONDO:0024275');
+  expect(descendants['MONDO:0001517']).toHaveProperty('MONDO:0001955');
+  expect(descendants['MONDO:0001517']).toHaveProperty('MONDO:0024275');
 });
 
 //UMLS:C0680344 -> UMLS:C0003114 -> UMLS:C0680369
@@ -49,22 +49,22 @@ test('mondo', () => {
 test('umls', () => {
   let curies = ['UMLS:C0680344'];
   let descendants = getDescendants(curies);
-  expect(descendants['UMLS:C0680344']).toContain('UMLS:C0003114');
-  expect(descendants['UMLS:C0680344']).toContain('UMLS:C0680369');
+  expect(descendants['UMLS:C0680344']).toHaveProperty('UMLS:C0003114');
+  expect(descendants['UMLS:C0680344']).toHaveProperty('UMLS:C0680369');
 });
 
 test('multiple', () => {
   let curies = ['HP:0003812', 'MONDO:0001517'];
   let descendants = getDescendants(curies);
-  expect(descendants['HP:0003812']).toContain('HP:0003828');
-  expect(descendants['MONDO:0001517']).toContain('MONDO:0001955');
-  expect(descendants['MONDO:0001517']).toContain('MONDO:0024275');
+  expect(descendants['HP:0003812']).toHaveProperty('HP:0003828');
+  expect(descendants['MONDO:0001517']).toHaveProperty('MONDO:0001955');
+  expect(descendants['MONDO:0001517']).toHaveProperty('MONDO:0024275');
 });
 
 test('no descendants', () => {
   let curies = ['DOID:0060527'];
   let descendants = getDescendants(curies);
-  expect(descendants['DOID:0060527'].length).toBe(0);
+  expect(Object.keys(descendants['DOID:0060527']).length).toBe(0);
 });
 
 test('recursive', () => {
