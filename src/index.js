@@ -13,7 +13,9 @@ const loadData = () => {
   for (let ontology in ONTOLOGIES) {
     const filename = `../data/${ontology}-parsed.json`;
     const ontologyData = require(filename);
-    data = { ...data, ...ontologyData };
+    Object.entries(ontologyData).forEach(([parent, descendants]) => {
+      data[parent] = { source: ontology.toUpperCase(), descendants };
+    });
   }
   // const end = performance.now();
   // console.log(`loadData took ${end - start} milliseconds.`);
@@ -28,27 +30,43 @@ exports.getDescendants = (curies, recursive = true) => {
     const children = {};
 
     for (let curie of curies) {
-      children[curie] = [];
+      children[curie] = {};
       level = [curie];
-      while (level.length > 0 && children[curie].length < ENTITY_CAP) {
+      while (
+        level.length > 0 &&
+        Object.keys(children[curie]).length < ENTITY_CAP
+      ) {
         next_level = [];
         for (let c of level) {
           if (data[c]) {
-            children[curie].push(...data[c]);
-            next_level.push(...data[c]);
+            data[c].descendants.forEach(
+              child => (children[curie][child] = data[c].source),
+            );
+            next_level.push(
+              ...data[c].descendants.filter(child => child !== curie),
+            );
           }
         }
         level = next_level;
       }
-      children[curie] = _.uniq(children[curie])
-        .filter(child => child !== curie)
-        .slice(0, ENTITY_CAP);
+
+      delete children[curie][curie]; // Ensure no self-children
+      children[curie] = Object.fromEntries(
+        Object.entries(children[curie]).slice(0, ENTITY_CAP),
+      );
     }
     return children;
   } else {
     return Object.fromEntries(
-      Object.entries(_.pick(data, curies)).map(([curie, descendants]) => {
-        return [curie, descendants.filter(descendant => descendant !== curie)];
+      Object.entries(_.pick(data, curies)).map(([curie, descendantInfo]) => {
+        return [
+          curie,
+          Object.fromEntries(
+            descendantInfo.descendants
+              .filter(descendant => descendant !== curie)
+              .map(descendant => [descendant, source]),
+          ),
+        ];
       }),
     );
   }
